@@ -36,18 +36,13 @@ namespace AlexaSimpleCalcSkill.Controllers
       response.Response.Card.Title = "Simple Calculator";
       response.Response.Card.Content = "Calculator";
       response.Response.Reprompt.OutputSpeech.Text = "Say it again? Yes or no?";
-      response.Response.ShouldEndSession = true;
+      response.Response.ShouldEndSession = false;
 
-      //if (request.Intent == "AMAZON.YesIntent")
-      //{
-
-      //}
-
-      //if (requestIntent == "AMAZON.NoIntent")
-      //{
-      //  response.Response.OutputSpeech.Text = "Ok. I'll leave you be for now.";
-      //  response.Response.ShouldEndSession = true;
-      //}
+      if (request.Intent == "AMAZON.NoIntent")
+      {
+        response.Response.OutputSpeech.Text = "Ok. I'll leave you be for now.";
+        response.Response.ShouldEndSession = true;
+      }
 
       return response;
 
