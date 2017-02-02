@@ -1,0 +1,12 @@
+C:\Users\steve.duitsman\Documents\Visual Studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSimpleCalcSkill.Data\bin\Debug\AlexaSimpleCalcSkill.Data.dll.config
+C:\Users\steve.duitsman\Documents\Visual Studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSimpleCalcSkill.Data\bin\Debug\AlexaSimpleCalcSkill.Data.dll
+C:\Users\steve.duitsman\Documents\Visual Studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSimpleCalcSkill.Data\bin\Debug\AlexaSimpleCalcSkill.Data.pdb
+C:\Users\steve.duitsman\Documents\Visual Studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSimpleCalcSkill.Data\bin\Debug\EntityFramework.dll
+C:\Users\steve.duitsman\Documents\Visual Studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSimpleCalcSkill.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\steve.duitsman\Documents\Visual Studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSimpleCalcSkill.Data\bin\Debug\Newtonsoft.Json.dll
+C:\Users\steve.duitsman\Documents\Visual Studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSimpleCalcSkill.Data\bin\Debug\EntityFramework.xml
+C:\Users\steve.duitsman\Documents\Visual Studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSimpleCalcSkill.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\steve.duitsman\Documents\Visual Studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSimpleCalcSkill.Data\bin\Debug\Newtonsoft.Json.xml
+C:\Users\steve.duitsman\Documents\Visual Studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSimpleCalcSkill.Data\obj\Debug\AlexaSimpleCalcSkill.Data.csprojResolveAssemblyReference.cache
+C:\Users\steve.duitsman\Documents\Visual Studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSimpleCalcSkill.Data\obj\Debug\AlexaSimpleCalcSkill.Data.dll
+C:\Users\steve.duitsman\Documents\Visual Studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSimpleCalcSkill.Data\obj\Debug\AlexaSimpleCalcSkill.Data.pdb

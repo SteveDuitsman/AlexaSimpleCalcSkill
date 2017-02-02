@@ -1,0 +1,5 @@
+c:\users\steve.duitsman\documents\visual studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSkill.Models\obj\Debug\AlexaSkill.Models.csprojResolveAssemblyReference.cache
+c:\users\steve.duitsman\documents\visual studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSkill.Models\bin\Debug\AlexaSkill.Models.dll
+c:\users\steve.duitsman\documents\visual studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSkill.Models\bin\Debug\AlexaSkill.Models.pdb
+c:\users\steve.duitsman\documents\visual studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSkill.Models\obj\Debug\AlexaSkill.Models.dll
+c:\users\steve.duitsman\documents\visual studio 2015\Projects\AlexaSimpleCalcSkill\AlexaSkill.Models\obj\Debug\AlexaSkill.Models.pdb

@@ -1,0 +1,27 @@
+﻿{
+  "intents": [
+    {
+      "intent": "AMAZON.YesIntent"
+    },
+    {
+      "intent": "AMAZON.NoIntent"
+    },
+    {
+      "intent": "CalculatorIntent",
+      "slots": [
+        {
+          "name": "FirstValue",
+          "type": "AMAZON.NUMBER"
+        },
+        {
+          "name": "Operator",
+          "type": "OPERATION"
+        },
+        {
+          "name": "SecondValue",
+          "type": "AMAZON.NUMBER"
+        }
+      ]
+    }
+  ]
+}

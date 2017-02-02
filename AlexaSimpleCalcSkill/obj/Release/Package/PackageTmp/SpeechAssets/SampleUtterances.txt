@@ -1,0 +1,4 @@
+﻿CalculatorIntent {Operator} {FirstValue} and {SecondValue}
+CalculatorIntent what is {FirstValue} {Operator} {SecondValue}
+CalculatorIntent {Operator} of {FirstValue} and {SecondValue}
+CalculatorIntent {FirstValue} {Operator} {SecondValue}
