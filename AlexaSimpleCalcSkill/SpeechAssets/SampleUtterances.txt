@@ -1,4 +1,11 @@
-﻿CalculatorIntent {Operator} {FirstValue} and {SecondValue}
-CalculatorIntent what is {FirstValue} {Operator} {SecondValue}
-CalculatorIntent {Operator} of {FirstValue} and {SecondValue}
-CalculatorIntent {FirstValue} {Operator} {SecondValue}
+﻿CalculationIntent {Operator} {FirstValue} and {SecondValue}
+CalculationIntent what is {FirstValue} {Operator} {SecondValue}
+CalculationIntent {Operator} of {FirstValue} and {SecondValue}
+CalculationIntent {FirstValue} {Operator} {SecondValue}
+
+ChainedCalculationIntent {Operator} {FirstValue}
+
+AMAZON.CancelIntent cancel
+
+AMAZON.StopIntent abort
+AMAZON.StopIntent stop
