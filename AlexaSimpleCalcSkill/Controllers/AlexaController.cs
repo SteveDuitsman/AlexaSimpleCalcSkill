@@ -11,9 +11,14 @@ namespace AlexaSimpleCalcSkill.Controllers
 {
   public class AlexaController : ApiController
   {
+    private const string APP_ID = "amzn1.ask.skill.a4646fe3-0950-4984-8bb2-dee348e02b6c";
+
     [HttpPost, Route("api/alexa/simplecalculator")]
     public dynamic SimpleCalculator(AlexaRequest alexaRequest)
     {
+      if (alexaRequest.Session.Application.ApplicationId != APP_ID)
+        throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest));
+
       var request = new Requests().Create(new Data.Request
                                           {
                                             MemberId = (alexaRequest.Session.Attributes == null) ? 0 : alexaRequest.Session.Attributes.MemberId,
