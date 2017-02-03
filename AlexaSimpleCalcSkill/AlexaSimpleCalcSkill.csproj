@@ -209,6 +209,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlexaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Operation.cs" />
+    <Compile Include="Controllers\SimpleCalculator.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

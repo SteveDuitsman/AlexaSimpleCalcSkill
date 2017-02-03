@@ -30,5 +30,6 @@ namespace AlexaSimpleCalcSkill.Data
         public System.DateTime DateCreated { get; set; }
     
         public virtual Member Member { get; set; }
+        public List<KeyValuePair<string, string>> SlotsList { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace AlexaSimpleCalcSkill.Controllers
                                             Version = alexaRequest.Version,
                                             Type = alexaRequest.Request.Type,
                                             Reason = alexaRequest.Request.Reason,
-                                            //SlotsList = alexaRequest.Request.Intent.GetSlots(),
+                                            SlotsList = alexaRequest?.Request?.Intent?.GetSlots(),
                                             DateCreated = DateTime.UtcNow
                                           });
       AlexaResponse response = null;
@@ -57,6 +57,9 @@ namespace AlexaSimpleCalcSkill.Controllers
         case "ChainedCalculationIntent":
           response = ChainedCalculationIntentHandler(request);
           break;
+        case "AMAZON.HelpIntent":
+          response = HelpIntentHandler(request);
+          break;
         case "AMAZON.StopIntent":
           response = StopIntentHandler(request);
           break;
@@ -67,42 +70,100 @@ namespace AlexaSimpleCalcSkill.Controllers
       return response;
     }
 
+
+    /**
+     * 
+     * Intent Handlers
+     * 
+     **/
+
     private AlexaResponse ChainedCalculationIntentHandler(Request request)
     {
-      var response = new AlexaResponse("I dont know how to chain calculations yet. Sorry.")
-                     {
-                       Response = {ShouldEndSession = true}
-                     };
+      var response = new AlexaResponse("I dont know how to chain calculations yet. Sorry.", true);
       return response;
     }
 
+    private const string FIRST_VALUE = "FirstValue";
+    private const string OPERATOR = "Operator";
+    private const string SECOND_VALUE = "SecondValue";
+
+
     private AlexaResponse CalculationIntentHandler(Request request)
     {
-      var response = new AlexaResponse("I dont know how to do calculations yet. Sorry.")
+      var response = new AlexaResponse("I don't understand what you're asking me to calculate. Can you try again?", false);
+
+      try
       {
-        Response = { ShouldEndSession = true }
-      };
+        var firstValue = request.SlotsList.FirstOrDefault(s => s.Key == FIRST_VALUE).Value;
+        var op = request.SlotsList.FirstOrDefault(s => s.Key == OPERATOR).Value;
+        var secondValue = request.SlotsList.FirstOrDefault(s => s.Key == SECOND_VALUE).Value;
+
+        if (firstValue != null && op != null && secondValue != null)
+        {
+          var actualOperation = new OperationFactory().Create(op);
+          var actualFirstValue = GetDoubleFromSlotValue(firstValue);
+          var actualSecondValue = GetDoubleFromSlotValue(secondValue);
+
+          if (Math.Abs(actualSecondValue - 0.00) <= 0.000 && actualOperation == OperationEnum.Divide)
+          {
+            response = new AlexaResponse("Only Chuck Norris can do that.", true);
+          }
+          else
+          {
+            var answer = new SimpleCalculator().Calculate(actualFirstValue, actualOperation, actualSecondValue);
+            var message = $"{firstValue} {op} {secondValue} is {answer}";
+            response = new AlexaResponse(message, false)
+                       {
+                         Session = {PreviousAnswer = answer}
+                       };
+          }
+        }
+      }
+      catch (Exception e)
+      {
+        Console.WriteLine(e);
+        response = new AlexaResponse("I don't understand what you're asking me to calculate. Can you try again?", true);
+      }
+      return response;
+    }
+
+    private double GetDoubleFromSlotValue(string value)
+    {
+      var number = 0.0;
+      if (!double.TryParse(value, out number))
+      {
+        throw new ArgumentOutOfRangeException("slot value should be a number");
+      }
+      return number;
+    }
+
+    private AlexaResponse HelpIntentHandler(Request request)
+    {
+      var response = new AlexaResponse("To use SimpleCalculator, say things like, Alexa, ask SimpleCalculator what is 5 plus 5, or Alexa, what is 5 to the power of 5.", false);
       return response;
     }
 
     private AlexaResponse CancelIntentHandler(Request request)
     {
-      var response = new AlexaResponse("Canceled.")
-      {
-        Response = { ShouldEndSession = true }
-      };
+      var response = new AlexaResponse("Canceled.", true);
       return response;
     }
 
     private AlexaResponse StopIntentHandler(Request request)
     {
-      var response = new AlexaResponse("Ok. I'll stop.")
-      {
-        Response = { ShouldEndSession = true }
-      };
+      var response = new AlexaResponse("Ok. I'll stop.", true)
+                     {
+                       Session = {PreviousAnswer = null}
+                     };
       return response;
     }
 
+
+    /**
+     * 
+     * Request Handlers
+     * 
+     **/
 
     private AlexaResponse LaunchRequestHandler(Request request)
     {
@@ -112,13 +173,6 @@ namespace AlexaSimpleCalcSkill.Controllers
       response.Response.Card.Content = "Calculator";
       response.Response.Reprompt.OutputSpeech.Text = "Can I help with some math?";
       response.Response.ShouldEndSession = true;
-
-      if (request.Intent == "AMAZON.NoIntent")
-      {
-        response.Response.OutputSpeech.Text = "Ok. I'll leave you be for now.";
-        response.Response.ShouldEndSession = true;
-      }
-
       return response;
     }
 

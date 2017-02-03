@@ -38,6 +38,9 @@
           "type": "OPERATION"
         }
       ]
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
     }
   ]
 }

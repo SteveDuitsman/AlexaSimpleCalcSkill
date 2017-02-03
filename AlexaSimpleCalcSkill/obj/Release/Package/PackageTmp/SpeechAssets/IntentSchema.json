@@ -1,13 +1,16 @@
 ﻿{
   "intents": [
     {
-      "intent": "AMAZON.YesIntent"
+      "intent": "AMAZON.CancelIntent"
     },
     {
       "intent": "AMAZON.NoIntent"
     },
     {
-      "intent": "CalculatorIntent",
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "CalculationIntent",
       "slots": [
         {
           "name": "FirstValue",
@@ -20,6 +23,19 @@
         {
           "name": "SecondValue",
           "type": "AMAZON.NUMBER"
+        }
+      ]
+    },
+    {
+      "intent": "ChainedCalculationIntent",
+      "slots": [
+        {
+          "name": "FirstValue",
+          "type": "AMAZON.NUMBER"
+        },
+        {
+          "name": "Operator",
+          "type": "OPERATION"
         }
       ]
     }
