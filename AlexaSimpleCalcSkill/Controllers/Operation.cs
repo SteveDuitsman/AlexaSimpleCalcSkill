@@ -6,32 +6,33 @@ namespace AlexaSimpleCalcSkill.Controllers
   {
     public OperationEnum Create(string op)
     {
-      OperationEnum result = OperationEnum.None;
-      if (Add.Contains(op.ToLowerInvariant()))
+      var result = OperationEnum.None;
+      var lowerCaseOp = op.ToLowerInvariant();
+      if (Add.Contains(lowerCaseOp))
       {
         result = OperationEnum.Add;
       }
-      else if (Subtract.Contains(op.ToLowerInvariant()))
+      else if (Subtract.Contains(lowerCaseOp))
       {
         result = OperationEnum.Subtract;
       }
-      else if (Multiply.Contains(op.ToLowerInvariant()))
+      else if (Multiply.Contains(lowerCaseOp))
       {
         result = OperationEnum.Multiply;
       }
-      else if (Divide.Contains(op.ToLowerInvariant()))
+      else if (Divide.Contains(lowerCaseOp))
       {
         result = OperationEnum.Divide;
       }
-      else if (SquareRoot.Contains(op.ToLowerInvariant()))
+      else if (SquareRoot.Contains(lowerCaseOp))
       {
         result = OperationEnum.SquareRoot;
       }
-      else if (Squared.Contains(op.ToLowerInvariant()))
+      else if (Squared.Contains(lowerCaseOp))
       {
         result = OperationEnum.Square;
       }
-      else if (ToPower.Contains(op.ToLowerInvariant()))
+      else if (ToPower.Contains(lowerCaseOp))
       {
         result = OperationEnum.Power;
       }

@@ -37,7 +37,7 @@ namespace AlexaSimpleCalcSkill.Controllers
           response = LaunchRequestHandler(request);
           break;
         case "IntentRequest":
-          response = IntentRequestHandler(request);
+          response = IntentRequestHandler(request, alexaRequest);
           break;
         case "SessionEndedRequest":
           response = SessionEndedRequestHandler(request);
@@ -46,7 +46,7 @@ namespace AlexaSimpleCalcSkill.Controllers
       return response;
     }
 
-    private AlexaResponse IntentRequestHandler(Request request)
+    private AlexaResponse IntentRequestHandler(Request request, AlexaRequest alexaRequest)
     {
       AlexaResponse response = null;
       switch (request.Intent)
@@ -55,7 +55,7 @@ namespace AlexaSimpleCalcSkill.Controllers
           response = CalculationIntentHandler(request);
           break;
         case "ChainedCalculationIntent":
-          response = ChainedCalculationIntentHandler(request);
+          response = ChainedCalculationIntentHandler(request, alexaRequest);
           break;
         case "AMAZON.HelpIntent":
           response = HelpIntentHandler(request);
@@ -71,15 +71,46 @@ namespace AlexaSimpleCalcSkill.Controllers
     }
 
 
-    /**
-     * 
-     * Intent Handlers
-     * 
-     **/
+    //
+    // Intent Handlers
+    //
 
-    private AlexaResponse ChainedCalculationIntentHandler(Request request)
+    private AlexaResponse ChainedCalculationIntentHandler(Request request, AlexaRequest alexaRequest)
     {
-      var response = new AlexaResponse("I dont know how to chain calculations yet. Sorry.", true);
+      var response = new AlexaResponse("I don't understand how to chain that calculation. Can you try again?", false);
+
+      try
+      {
+        var firstValue = request.SlotsList.FirstOrDefault(s => s.Key == FIRST_VALUE).Value;
+        var op = request.SlotsList.FirstOrDefault(s => s.Key == OPERATOR).Value;
+
+        if (HasPreviousAnswer(alexaRequest) && 
+            firstValue != null && 
+            op != null)
+        {
+          var actualOperation = new OperationFactory().Create(op);
+          var actualFirstValue = GetDoubleFromSlotValue(firstValue);
+          var previousAnswer = GetPreviousAnswer(alexaRequest);
+
+          if (Math.Abs(actualFirstValue - 0.00) <= 0.000 && actualOperation == OperationEnum.Divide)
+          {
+            response = new AlexaResponse("Only Chuck Norris can do that.", false);
+          }
+          else
+          {
+            var answer = new SimpleCalculator().Calculate(previousAnswer, actualOperation, actualFirstValue);
+            var message = $"{previousAnswer} {op} {firstValue} is {answer}";
+            response = new AlexaResponse(message, false)
+            {
+              Session = { PreviousAnswer = answer }
+            };
+          }
+        }
+      }
+      catch (Exception e)
+      {
+        response = new AlexaResponse("Something went wrong. It's my fault. Let's start over.", true);
+      }
       return response;
     }
 
@@ -121,20 +152,9 @@ namespace AlexaSimpleCalcSkill.Controllers
       }
       catch (Exception e)
       {
-        Console.WriteLine(e);
-        response = new AlexaResponse("I don't understand what you're asking me to calculate. Can you try again?", true);
+        response = new AlexaResponse("Something went wrong. It's my fault. Let's start over.", true);
       }
       return response;
-    }
-
-    private double GetDoubleFromSlotValue(string value)
-    {
-      var number = 0.0;
-      if (!double.TryParse(value, out number))
-      {
-        throw new ArgumentOutOfRangeException("slot value should be a number");
-      }
-      return number;
     }
 
     private AlexaResponse HelpIntentHandler(Request request)
@@ -159,11 +179,9 @@ namespace AlexaSimpleCalcSkill.Controllers
     }
 
 
-    /**
-     * 
-     * Request Handlers
-     * 
-     **/
+    // 
+    // Request Handlers
+    // 
 
     private AlexaResponse LaunchRequestHandler(Request request)
     {
@@ -179,6 +197,30 @@ namespace AlexaSimpleCalcSkill.Controllers
     private AlexaResponse SessionEndedRequestHandler(Request request)
     {
       return null;
+    }
+
+
+    //
+    // Helper Methods
+    //
+    private double GetDoubleFromSlotValue(string value)
+    {
+      var number = 0.0;
+      if (!double.TryParse(value, out number))
+      {
+        throw new ArgumentOutOfRangeException("slot value should be a number");
+      }
+      return number;
+    }
+
+    private bool HasPreviousAnswer(AlexaRequest alexaRequest)
+    {
+      return alexaRequest.Session.Attributes.PreviousAnswer.HasValue;
+    }
+
+    private double GetPreviousAnswer(AlexaRequest alexaRequest)
+    {
+      return alexaRequest.Session.Attributes.PreviousAnswer ?? 0;
     }
   }
 }

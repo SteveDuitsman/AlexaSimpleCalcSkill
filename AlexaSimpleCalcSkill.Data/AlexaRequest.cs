@@ -21,6 +21,8 @@ namespace AlexaSimpleCalcSkill.Data
     {
       [JsonProperty("memberId")]
       public int MemberId { get; set; }
+      [JsonProperty("previousAnswer")]
+      public double? PreviousAnswer { get; set; }
     }
 
     [JsonObject("session")]

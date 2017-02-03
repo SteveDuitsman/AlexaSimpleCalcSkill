@@ -31,5 +31,6 @@ namespace AlexaSimpleCalcSkill.Data
     
         public virtual Member Member { get; set; }
         public List<KeyValuePair<string, string>> SlotsList { get; set; }
+      public AlexaRequest.SessionAttributes Session { get; set; }
     }
 }
