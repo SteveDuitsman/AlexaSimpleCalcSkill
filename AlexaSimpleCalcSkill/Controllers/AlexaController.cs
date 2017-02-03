@@ -17,7 +17,15 @@ namespace AlexaSimpleCalcSkill.Controllers
     public dynamic SimpleCalculator(AlexaRequest alexaRequest)
     {
       if (alexaRequest.Session.Application.ApplicationId != APP_ID)
+      {
         throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest));
+      }
+
+      var totalSeconds = (DateTime.UtcNow - alexaRequest.Request.Timestamp).TotalSeconds;
+      if (totalSeconds <= 0 || totalSeconds > 150)
+      {
+        throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.BadRequest));
+      }
 
       var request = new Requests().Create(new Data.Request
                                           {
@@ -89,8 +97,8 @@ namespace AlexaSimpleCalcSkill.Controllers
         var firstValue = request.SlotsList.FirstOrDefault(s => s.Key == FIRST_VALUE).Value;
         var op = request.SlotsList.FirstOrDefault(s => s.Key == OPERATOR).Value;
 
-        if (HasPreviousAnswer(alexaRequest) && 
-            firstValue != null && 
+        if (HasPreviousAnswer(alexaRequest) &&
+            firstValue != null &&
             op != null)
         {
           var actualOperation = new OperationFactory().Create(op);
@@ -106,9 +114,9 @@ namespace AlexaSimpleCalcSkill.Controllers
             var answer = new SimpleCalculator().Calculate(previousAnswer, actualOperation, actualFirstValue);
             var message = $"{previousAnswer} {op} {firstValue} is {answer}";
             response = new AlexaResponse(message, false)
-            {
-              Session = { PreviousAnswer = answer }
-            };
+                       {
+                         Session = {PreviousAnswer = answer}
+                       };
           }
         }
       }
