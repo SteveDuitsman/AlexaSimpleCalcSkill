@@ -195,7 +195,7 @@ namespace AlexaSimpleCalcSkill.Controllers
       response.Response.Card.Title = "Simple Calculator";
       response.Response.Card.Content = "Calculator";
       response.Response.Reprompt.OutputSpeech.Text = "Can I help with some math?";
-      response.Response.ShouldEndSession = true;
+      response.Response.ShouldEndSession = false;
       return response;
     }
 
